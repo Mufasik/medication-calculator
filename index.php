@@ -18,4 +18,5 @@
         <input type="text" name="days">
         <input type="submit" value="Отправить">
     </form>
+    <?php echo phpversion(); ?> 
 </body>
