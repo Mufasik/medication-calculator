@@ -35,8 +35,8 @@ function getItems(string $s) : array {
 // получаем и проверяем данные формы
 $item = getItems(htmlspecialchars($_POST["name"]));
 if (!$item["errors"]) {
-    $total = intval($_POST["morning"] + $_POST["day"] + $_POST["evening"] + $_POST["night"]);
-    $total = round($total * $_POST["days"] / $item["count"], 1);
+    $total = intval($_POST["day"]) * intval($_POST["days"]);
+    $total = round($total / $item["count"], 1);
     if ($total) {
         echo "Необходимо купить лекарство: $item[name] - $total шт";
     } else {
