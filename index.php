@@ -6,7 +6,9 @@
 
 <body>
     <form action="form.php" method="post" enctype="multipart/form-data">
-        Введите название лекарства с сайта https://www.medgorodok.ru/<br><br>
+        Введите название лекарства с сайта 
+        <a href="https://www.medgorodok.ru/" target="_blank"> медгородок</a>
+        <br><br>
         <input type="text" name="name">
         <ul> Сколько штук 
         <li><input type="text" name="morning"> утром</li>
