@@ -36,7 +36,7 @@ function getItems(string $s) : array {
 $item = getItems(htmlspecialchars($_POST["name"]));
 if (!$item["errors"]) {
     $total = intval($_POST["morning"] + $_POST["day"] + $_POST["evening"] + $_POST["night"]);
-    $total = $total * $_POST["days"] / $item["count"];
+    $total = round($total * $_POST["days"] / $item["count"], 1);
     if ($total) {
         echo "Необходимо купить лекарство: $item[name] - $total шт";
     } else {
