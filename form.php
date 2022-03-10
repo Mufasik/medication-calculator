@@ -1,40 +1,39 @@
 <?php
-/*
-поиск лекарств через медгородок https://www.medgorodok.ru и разбивка на количество и дозы
-Примеры названий
-Салофальк (гранулы п.киш.р-рим.о. пролонг. 1000 мг пак. N50) Др. Фальк Фарма ГмбХ, Лозан Фарма ГмбХ - Германия
-Омепразол-Тева (капсулы киш. 20 мг № 14 блистер) Тева Фарма, С.Л.У Испания
-Преднизолон (таблетки 5 мг № 100) Гедеон Рихтер ООО Венгрия Гедеон Рихтер-Рус АО Россия
-Панкреатин (табл. п. киш.-рим. о. 25 ЕД № 20 уп. яч. контур.) Биосинтез ПАО г. Пенза Россия
-Салофальк (пена рект. 1 г/аппликация N14 аппликаций, баллон (1) в компл. с аппликаторами 14 шт.) Др. Фальк Фарма ГмбХ - Германия, Аэрозоль-Сервис АГ- Швейцария
-Салофальк (сусп. ректальная 4 г/60 мл; (микролизма) флакон N7) Д-р Фальк Фарма ГмбХ - Германия, Вифор АГ - Швейцария
-*/
-
-// разбиваем название лекарства
-function splitName(string $str) : array {
-    $split = [strpos($str, '('), strpos($str, ','), strpos($str, ' ')];
-    $pos = strlen($str);
-    foreach ($split as $spl) {
-        if ($spl) {
-            $pos = $spl;
-            break;
-        }
-    }
+// разбиваем на название, кол-во, доза
+function getItems(string $s) : array {
+    $split = strpos($s, '(') ? strpos($s, '(') : strpos($s, ' ');
+    $name = $split ? substr($s, 0, $split) : $s;
     $errors = [];
-    $name = substr($str, 0, $pos);
+    
     if (!$name) {
         $errors[] = "Название не указано";
     }
-    $count = "";
-    $dose = "";
+    $count = 0;
+    $dose = 0;
+
+    $pattern = "/[N№]\s*\d+/";
+    if(preg_match_all($pattern, $s, $matches)) {
+        $count = (int)(substr($matches[0][0], 1));
+    } else {
+        $errors[] = "Количество не найдено";
+    }
+
+    $pattern = "/\s*\d+\s*г|мг/";
+    if(preg_match_all($pattern, $s, $matches)) {
+        $dose = (int)$matches[0][0];
+    } else {
+        $errors[] = "Доза не найдена";
+    }
     
     foreach ($errors as $err) {
         echo "$err<br>";
     }
-    return [$name, $count, $dose];
+    return ["name" => $name, "count" => $count, "dose" => $dose];
 }
 
-$item = splitName(htmlspecialchars($_POST['name']));
+$item = getItems(htmlspecialchars($_POST['name']));
+
+echo "Необходимо купить столько пачек";
 
 echo "<pre>";
 print_r($item);
