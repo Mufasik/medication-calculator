@@ -10,11 +10,8 @@
         <a href="https://www.medgorodok.ru/" target="_blank"> медгородок</a>
         <br><br>
         <input type="text" name="name">
-        <ul> Сколько штук 
-        <li><input type="text" name="morning"> утром</li>
-        <li><input type="text" name="day"> днем</li>
-        <li><input type="text" name="evening"> вечером</li>
-        <li><input type="text" name="night"> на ночь</li>
+        <ul> Сколько штук в день
+        <li><input type="text" name="day"></li>
         </ul>
         Сколько дней принимать
         <input type="text" name="days">
